@@ -110,7 +110,7 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
 
     private void writeNewUser(String userId, String firstName, String lastName, String email) {
         User user = new User(firstName, lastName, email);
-        mDatabase.push().child(userId).setValue(user);
+        mDatabase.child(userId).child("More").setValue(user);
     }
     //method to validate form
     private boolean validateForm() {

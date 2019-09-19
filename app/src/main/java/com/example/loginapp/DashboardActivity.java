@@ -15,6 +15,7 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 public class DashboardActivity extends AppCompatActivity {
     TextView firstName;
@@ -41,12 +42,11 @@ public class DashboardActivity extends AppCompatActivity {
         childEventListener = new ChildEventListener() {
             @Override
             public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-                User user = dataSnapshot.child(firebaseUser.getUid()).getValue(User.class);
-                Log.i("ahhm", dataSnapshot.getValue().toString());
+
+                User user = dataSnapshot.getValue(User.class);
                 email = user.getEmail();
                 firstname = user.getFirstName();
                 lastname = user.getLastName();
-                Log.i("ahhi", email);
                 eMail.setText("Your email is " + email);
                 firstName.setText("Your first name is " + firstname);
                 lastName.setText("Your last name is " + lastname);
@@ -72,7 +72,6 @@ public class DashboardActivity extends AppCompatActivity {
 
             }
         };
-        databaseReference.addChildEventListener(childEventListener);
-
+        databaseReference.child(firebaseUser.getUid()).addChildEventListener(childEventListener);
     }
 }
